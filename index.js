@@ -487,7 +487,7 @@ const createWordsAndClues = async () => {
         retrievedWordList = await getNewWord(queryParams);
 
         shuffledWordList = retrievedWordList.sort((a, b) => {
-          return Math.random() > 5 ? 1 : -1;
+          return Math.random() > 0.5 ? 1 : -1;
         });
 
         index = 0;
@@ -641,7 +641,7 @@ const createWordsAndClues = async () => {
         let newWordList = await getNewWord(query);
 
         let shuffledNewWordList = newWordList.sort((a, b) => {
-          return b.score - a.score;
+          return Math.random() > 0.5 ? 1 : -1;
         });
 
         let index = 0;
