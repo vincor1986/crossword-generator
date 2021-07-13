@@ -122,10 +122,9 @@ table {
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 650px) and (min-width: 451px) {
   .app {
     margin: 40px 140px;
-    overflow-y: hidden;
   }
 
   td .contents {
@@ -163,6 +162,60 @@ table {
     left: 50vw;
     margin-left: -225px;
     width: 450px;
+    padding: 0px;
+  }
+
+  .across-card,
+  .down-card {
+    margin: 10px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .app {
+    margin: 40px 140px;
+  }
+
+  h1 {
+    position: relative;
+    font-size: 28px;
+  }
+
+  td .contents {
+    font-size: 18px;
+  }
+
+  table {
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    margin-top: -175px;
+    margin-left: -150px;
+  }
+
+  td {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
+  }
+
+  td .number {
+    left: -0.3em;
+    top: -0.5em;
+    font-size: 10px;
+  }
+
+  .container {
+    font-size: 12px;
+    position: absolute;
+    display: flex;
+    word-wrap: break-word;
+    align-items: flex-start;
+    top: 430px;
+    left: 50vw;
+    margin-left: -150px;
+    width: 300px;
     padding: 0px;
   }
 
