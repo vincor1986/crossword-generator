@@ -763,4 +763,4 @@ const checkComplete = () => {
 
 createWordsAndClues();
 
-let interval = setInterval(checkComplete, 3500);
+let interval = setInterval(checkComplete, 4500);
