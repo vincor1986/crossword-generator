@@ -440,7 +440,7 @@ const createWordsAndClues = async () => {
     retrievedWordList = await getNewWord(queryParams);
 
     shuffledWordList = retrievedWordList.sort((a, b) => {
-      Math.random() > 0.5 ? 1 : -1;
+      return Math.random() > 0.5 ? 1 : -1;
     });
 
     console.log(shuffledWordList);
@@ -487,7 +487,7 @@ const createWordsAndClues = async () => {
         retrievedWordList = await getNewWord(queryParams);
 
         shuffledWordList = retrievedWordList.sort((a, b) => {
-          b.tags.f - a.tags.f;
+          return Math.random() > 5 ? 1 : -1;
         });
 
         index = 0;
@@ -546,8 +546,7 @@ const createWordsAndClues = async () => {
             console.log("getting new words for down", downWord);
             let downWordList = await getNewWord(qParams);
             let shuffledDownWordList = downWordList.sort((a, b) => {
-              parseInt(b.tags[0].replace("f:", "")) -
-                parseInt(a.tags[0].replace("f:", ""));
+              return Math.random() > 0.5 ? 1 : -1;
             });
 
             console.log(shuffledDownWordList);
@@ -763,4 +762,5 @@ const checkComplete = () => {
 
 createWordsAndClues();
 
-let interval = setInterval(checkComplete, 4500);
+let interval = setInterval(checkComplete, 3500);
+
