@@ -1,5 +1,5 @@
 html {
-  min-height: 240%;
+  min-height: 140%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -58,7 +58,11 @@ table {
   text-align: center;
 }
 
-@media screen and (min-width: 1151px) {
+@media screen and (min-width: 1201px) {
+  html {
+    overflow-y: hidden;
+  }
+
   .app {
     display: flex;
     margin: 40px 140px;
@@ -78,7 +82,7 @@ table {
   }
 }
 
-@media screen and (min-width: 651px) and (max-width: 1150px) {
+@media screen and (min-width: 651px) and (max-width: 1200px) {
   .app {
     display: flex;
     margin: 40px 140px;
@@ -172,6 +176,10 @@ table {
 }
 
 @media screen and (max-width: 450px) {
+  html {
+    min-height: 200%;
+  }
+
   .app {
     margin: 40px 140px;
   }
