@@ -8,11 +8,25 @@
     <title>Crossword Generator</title>
   </head>
   <body>
+    <div class="modal"><h2>Generating new crossword...</h2></div>
+    <br />
+    <br />
     <h1>
       Cross<span class="title-word">word</span>
       Generator
     </h1>
     <br />
+    <div class="diff-select">
+    <label id="diff-label" for="difficulty">Difficulty Level</label>
+    <select
+      name="difficulty"
+      id="difficulty"
+      class="difficulty-setting"
+      size="0"
+    ></div>
+      <option value="0">Normal</option>
+      <option value="1">Expert</option>
+    </select>
     <div class="app">
       <table>
         <tr id="0">
