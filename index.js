@@ -25,6 +25,12 @@ for (let i = 0; i < 10; i++) {
 
 // Randomly populate grid symmetrically with 50 black spaces
 
+let difficultySetting = 0;
+const difficulty = document.getElementById("difficulty");
+if (localStorage.getItem("difficulty") === "1") {
+  difficultySetting = 1;
+  difficulty.children[1].selected = "selected";
+}
 let blackSqCount = 0;
 
 while (blackSqCount < 80) {
@@ -439,9 +445,15 @@ const createWordsAndClues = async () => {
 
     retrievedWordList = await getNewWord(queryParams);
 
-    shuffledWordList = retrievedWordList.sort((a, b) => {
-      return Math.random() > 0.5 ? 1 : -1;
-    });
+    if (difficultySetting === 1) {
+      shuffledWordList = retrievedWordList.sort((a, b) => {
+        return Math.random() > 0.5 ? 1 : -1;
+      });
+    } else {
+      shuffledWordList = retrievedWordList.sort((a, b) => {
+        return b.score - a.score;
+      });
+    }
 
     console.log(shuffledWordList);
 
@@ -456,8 +468,9 @@ const createWordsAndClues = async () => {
       allWords.includes(
         retrievedWord.word ||
           retrievedWord.word.length !== word.ref.length ||
-          retrievedWord.word.includes(" ") ||
-          retrievedWord.word.includes("-")
+          retrievedWord.word.match(" ") ||
+          retrievedWord.word.match(/[0-9]/) ||
+          retrievedWord.word.match(/["!£$%&:-@/<>"]/)
       )
     ) {
       index++;
@@ -486,9 +499,15 @@ const createWordsAndClues = async () => {
 
         retrievedWordList = await getNewWord(queryParams);
 
-        shuffledWordList = retrievedWordList.sort((a, b) => {
-          return Math.random() > 0.5 ? 1 : -1;
-        });
+        if (difficultySetting === 1) {
+          shuffledWordList = retrievedWordList.sort((a, b) => {
+            return Math.random() > 5 ? 1 : -1;
+          });
+        } else {
+          shuffledWordList = retrieveWordList.sort((a, b) => {
+            return b.score - a.score;
+          });
+        }
 
         index = 0;
       }
@@ -502,12 +521,12 @@ const createWordsAndClues = async () => {
       retrievedWord.defs[
         Math.floor(Math.random() * retrievedWord.defs.length)
       ].split("\t")[1];
-    word.word = retrievedWord.word;
-    allWords.push(retrievedWord.word);
+    word.word = retrievedWord.word.split(" ").join("");
+    allWords.push(retrievedWord.word.split(" ").join(""));
     console.log("Word ADDED ACROSS", word, "order: ", order);
     order++;
 
-    let splitWord = retrievedWord.word.split("");
+    let splitWord = word.word.split("");
 
     for (let l = 0; l < len; l++) {
       word.ref[l].contents = splitWord[l].toUpperCase();
@@ -545,9 +564,17 @@ const createWordsAndClues = async () => {
 
             console.log("getting new words for down", downWord);
             let downWordList = await getNewWord(qParams);
-            let shuffledDownWordList = downWordList.sort((a, b) => {
-              return Math.random() > 0.5 ? 1 : -1;
-            });
+            let shuffledDownWordList = [];
+
+            if (difficultySetting === 1) {
+              shuffledDownWordList = downWordList.sort((a, b) => {
+                return Math.random() > 0.5 ? 1 : -1;
+              });
+            } else {
+              shuffledDownWordList = downWordList.sort((a, b) => {
+                return b.score - a.score;
+              });
+            }
 
             console.log(shuffledDownWordList);
 
@@ -560,8 +587,9 @@ const createWordsAndClues = async () => {
               !randomDownWord.defs ||
               allWords.includes(randomDownWord.word) ||
               randomDownWord.word.length !== downWord.ref.length ||
-              randomDownWord.word.includes(" ") ||
-              randomDownWord.word.includes("-")
+              randomDownWord.word.match(" ") ||
+              randomDownWord.word.match(/[0-9]/) ||
+              randomDownWord.word.match(/["!£$%&:-@/<>"]/)
             ) {
               index++;
               if (!shuffledDownWordList[index]) {
@@ -583,9 +611,15 @@ const createWordsAndClues = async () => {
 
                 downWordList = await getNewWord(qParams);
 
-                shuffledDownWordList = downWordList.sort((a, b) => {
-                  Math.random() > 0.5 ? 1 : -1;
-                });
+                if (difficultySetting === 1) {
+                  shuffledDownWordList = downWordList.sort((a, b) => {
+                    return Math.random() > 0.5 ? 1 : -1;
+                  });
+                } else {
+                  shuffledDownWordList = downWordList.sort((a, b) => {
+                    return b.score - a.score;
+                  });
+                }
 
                 index = 0;
               }
@@ -600,13 +634,13 @@ const createWordsAndClues = async () => {
                 Math.floor(Math.random() * randomDownWord.defs.length)
               ].split("\t")[1];
 
-            downWord.word = randomDownWord.word;
-            allWords.push(randomDownWord.word);
+            downWord.word = randomDownWord.word.split(" ").join("");
+            allWords.push(randomDownWord.word.split(" ").join(""));
 
             console.log("Word ADDED DOWN", downWord, "order: ", order);
             order++;
 
-            let spltWord = randomDownWord.word.split("");
+            let spltWord = downWord.word.split("");
             len = spltWord.length;
 
             for (let p = 0; p < len; p++) {
@@ -651,8 +685,9 @@ const createWordsAndClues = async () => {
           !finalNewWord.defs ||
           allWords.includes(finalNewWord.word) ||
           finalNewWord.word.length !== current.ref.length ||
-          finalNewWord.word.includes(" ") ||
-          finalNewWord.word.includes("-")
+          finalNewWord.word.match(" ") ||
+          finalNewWord.word.match(/[0-9]/) ||
+          finalNewWord.word.match(/["!£$%&:-@/<>"]/)
         ) {
           index++;
           finalNewWord = shuffledNewWordList[index];
@@ -666,13 +701,13 @@ const createWordsAndClues = async () => {
             Math.floor(Math.random() * finalNewWord.defs.length)
           ].split("\t")[1];
 
-        current.word = finalNewWord.word;
-        allWords.push(finalNewWord.word);
+        current.word = finalNewWord.word.split(" ").join("");
+        allWords.push(finalNewWord.word.split(" ").join(""));
 
         console.log("Word ADDED DOWN", current, "order: ", order);
         order++;
 
-        let splWord = finalNewWord.word.split("");
+        let splWord = current.word.split("");
         len = splWord.length;
 
         for (let q = 0; q < len; q++) {
@@ -690,6 +725,9 @@ const createWordsAndClues = async () => {
   console.log("build completed");
 
   populateCluesList();
+
+  const overlay = document.querySelector(".modal");
+  overlay.style.display = "none";
 };
 
 const clearGrid = () => {
@@ -762,5 +800,14 @@ const checkComplete = () => {
 
 createWordsAndClues();
 
-let interval = setInterval(checkComplete, 3500);
+let interval = setInterval(checkComplete, 4500);
 
+const difficultySelect = (value) => {
+  localStorage.setItem("difficulty", value);
+  difficultySetting = parseInt(value);
+};
+
+difficulty.addEventListener("change", (e) => {
+  difficultySelect(e.target.value);
+  window.location.reload();
+});
