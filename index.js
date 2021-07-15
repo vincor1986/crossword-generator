@@ -522,7 +522,7 @@ let complete = false;
 let allWords = [];
 let order = 1;
 
-let disallowed = ["sex", "cum", "homo", "ass", "lie", "eff", "effed"];
+let disallowed = ["bitch", "sex", "cum", "homo", "ass", "lie", "eff", "effed"];
 
 const createWordsAndClues = async () => {
   const getNewWord = async (p) => {
@@ -604,7 +604,7 @@ const createWordsAndClues = async () => {
       retrievedWord.word.length !== word.ref.length ||
       retrievedWord.word.match(" ") ||
       retrievedWord.word.match(/[0-9]/) ||
-      retrievedWord.word.match(/["!£$%&:-@/<>"]/) ||
+      retrievedWord.word.match(/["!£$%&:-@/<>]/) ||
       disallowed.includes(retrievedWord.word)
     ) {
       index++;
@@ -752,7 +752,7 @@ const createWordsAndClues = async () => {
               randomDownWord.word.length !== downWord.ref.length ||
               randomDownWord.word.match(" ") ||
               randomDownWord.word.match(/[0-9]/) ||
-              randomDownWord.word.match(/["!£$%&:-@/<>"]/) ||
+              randomDownWord.word.match(/["!£$%&:-@/<>]/) ||
               disallowed.includes(randomDownWord.word)
             ) {
               if (index > shuffledDownWordList.length) {
@@ -881,7 +881,7 @@ const createWordsAndClues = async () => {
           finalNewWord.word.length !== current.ref.length ||
           finalNewWord.word.match(" ") ||
           finalNewWord.word.match(/[0-9]/) ||
-          finalNewWord.word.match(/["!£$%&:-@/<>"]/) ||
+          finalNewWord.word.match(/["!£$%&:-@/<>]/) ||
           disallowed.includes(finalNewWord.word)
         ) {
           index++;
