@@ -10,7 +10,7 @@ for (let i = 0; i < 10; i++) {
   for (let j = 0; j < 10; j++) {
     $(`[id=${i}]`)[0].cells[
       `${j}`
-    ].innerHTML = `<span class="number"></span><span class="contents"></span>`;
+    ].innerHTML = `<div class="number"></div><div class="contents"></div>`;
 
     grid[`row${i}`][j] = {
       cell: $(`[id=${i}]`)[0].cells[`${j}`],
