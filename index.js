@@ -508,6 +508,12 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
+// Create error handler for build failures
+
+window.addEventListener("unhandledrejection", function (e) {
+  window.location.reload();
+});
+
 // Call word finder API to discover words for answers
 
 // fill across word spaces with words from API
@@ -522,10 +528,11 @@ const createWordsAndClues = async () => {
     const response = await fetch(
       `https://api.datamuse.com/words?sp=${p}&md=df`
     );
+
     try {
       data = await response.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Could not retrieve word(s)");
     }
     return data;
   };
@@ -567,6 +574,10 @@ const createWordsAndClues = async () => {
 
     retrievedWordList = await getNewWord(queryParams);
 
+    if (retrievedWordList.length === 0) {
+      throw new Error("No words found");
+    }
+
     if (difficultySetting === 1) {
       shuffledWordList = retrievedWordList.sort((a, b) => {
         return Math.random() > 0.5 ? 1 : -1;
@@ -598,9 +609,15 @@ const createWordsAndClues = async () => {
     ) {
       index++;
 
+      if (index >= shuffledWordList.length) {
+        throw new Error("no words were suitable");
+      }
+
       if (!shuffledWordList[index]) {
         queryParams = "?".repeat(len);
         queryParams = queryParams.split("");
+
+        index = 0;
 
         let count = 0;
 
@@ -622,17 +639,19 @@ const createWordsAndClues = async () => {
 
         retrievedWordList = await getNewWord(queryParams);
 
+        if (retrievedWordList.length === 0) {
+          throw new Error("No words found");
+        }
+
         if (difficultySetting === 1) {
           shuffledWordList = retrievedWordList.sort((a, b) => {
             return Math.random() > 5 ? 1 : -1;
           });
         } else {
-          shuffledWordList = retrieveWordList.sort((a, b) => {
+          shuffledWordList = retrievedWordList.sort((a, b) => {
             return b.score - a.score;
           });
         }
-
-        index = 0;
       }
 
       retrievedWord = shuffledWordList[index];
@@ -687,6 +706,11 @@ const createWordsAndClues = async () => {
 
             console.log("getting new words for down", downWord);
             let downWordList = await getNewWord(qParams);
+
+            if (downWordList.length === 0) {
+              throw new Error("No words found");
+            }
+
             let shuffledDownWordList = [];
 
             if (difficultySetting === 1) {
@@ -715,7 +739,12 @@ const createWordsAndClues = async () => {
               randomDownWord.word.match(/["!£$%&:-@/<>"]/) ||
               randomDownWord.defs[0].includes("sexual")
             ) {
+              if (index > shuffledDownWordList.length) {
+                throw new Error("no words were suitable");
+              }
+
               index++;
+
               if (!shuffledDownWordList[index]) {
                 qParams = "?".repeat(len);
                 qParams = qParams.split("");
@@ -734,6 +763,10 @@ const createWordsAndClues = async () => {
                 console.log("getting new words - refetch down", downWord.ref);
 
                 downWordList = await getNewWord(qParams);
+
+                if (downWordList.length === 0) {
+                  throw new Error("No words found");
+                }
 
                 if (difficultySetting === 1) {
                   shuffledDownWordList = downWordList.sort((a, b) => {
@@ -798,6 +831,10 @@ const createWordsAndClues = async () => {
 
         let newWordList = await getNewWord(query);
 
+        if (newWordList.length === 0) {
+          throw new Error("no words found");
+        }
+
         let shuffledNewWordList = newWordList.sort((a, b) => {
           return Math.random() > 0.5 ? 1 : -1;
         });
@@ -815,6 +852,9 @@ const createWordsAndClues = async () => {
           finalNewWord.defs[0].includes("sexual")
         ) {
           index++;
+          if (index > shuffledWordList.length) {
+            throw new Error("no words were suitable");
+          }
           finalNewWord = shuffledNewWordList[index];
           console.log("stuck in while loop");
         }
@@ -855,31 +895,6 @@ const createWordsAndClues = async () => {
   overlay.style.display = "none";
 };
 
-const clearGrid = () => {
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      let current = grid[`row${i}`][j];
-      current.contents = "";
-    }
-  }
-
-  let across = Object.keys(words.across);
-
-  across.forEach((val) => {
-    let current = words.across[val];
-    current.word = "";
-    current.clue = "";
-  });
-
-  let down = Object.keys(words.down);
-
-  down.forEach((val) => {
-    let current = words.down[val];
-    current.word = "";
-    current.clue = "";
-  });
-};
-
 const populateCluesList = () => {
   let acrossCard = document.querySelector(".across-card");
   let downCard = document.querySelector(".down-card");
@@ -914,18 +929,7 @@ const populateCluesList = () => {
   });
 };
 
-const checkComplete = () => {
-  if (!complete) {
-    window.location.reload();
-  } else {
-    clearInterval(interval);
-    console.log("no need to run again");
-  }
-};
-
 createWordsAndClues();
-
-let interval = setInterval(checkComplete, 4500);
 
 const difficultySelect = (value) => {
   localStorage.setItem("difficulty", value);
