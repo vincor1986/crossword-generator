@@ -688,9 +688,6 @@ const createWordsAndClues = async () => {
 
     for (let l = 0; l < len; l++) {
       word.ref[l].contents = splitWord[l].toUpperCase();
-      word.ref[l].cell.children[1].textContent = `${splitWord[
-        l
-      ].toUpperCase()}`;
     }
 
     //check for down word(s) needed in across word squares + add in down words using same method
@@ -835,9 +832,6 @@ const createWordsAndClues = async () => {
 
             for (let p = 0; p < len; p++) {
               downWord.ref[p].contents = spltWord[p].toUpperCase();
-              downWord.ref[p].cell.children[1].textContent = `${spltWord[
-                p
-              ].toUpperCase()}`;
             }
           }
         }
@@ -925,9 +919,6 @@ const createWordsAndClues = async () => {
 
         for (let q = 0; q < len; q++) {
           current.ref[q].contents = splWord[q].toUpperCase();
-          current.ref[q].cell.children[1].textContent = `${splWord[
-            q
-          ].toUpperCase()}`;
         }
       }
     }
@@ -986,5 +977,39 @@ const difficultySelect = (value) => {
 
 difficulty.addEventListener("change", (e) => {
   difficultySelect(e.target.value);
+  window.location.reload();
+});
+
+const reveal = document.querySelector(".reveal");
+
+const revealGrid = () => {
+  console.log("reveal clicked");
+
+  const allAcross = Object.keys(words.across);
+
+  allAcross.forEach((word) => {
+    words.across[`${word}`].ref.forEach((cell, index) => {
+      cell.cell.children[1].textContent =
+        words.across[`${word}`].word[index].toUpperCase();
+    });
+  });
+
+  const allDown = Object.keys(words.down);
+
+  allDown.forEach((word) => {
+    words.down[`${word}`].ref.forEach((cell, index) => {
+      cell.cell.children[1].textContent =
+        words.down[`${word}`].word[index].toUpperCase();
+    });
+  });
+
+  reveal.removeEventListener("click", revealGrid);
+};
+
+reveal.addEventListener("click", revealGrid);
+
+const newGrid = document.querySelector(".new");
+
+newGrid.addEventListener("click", () => {
   window.location.reload();
 });
