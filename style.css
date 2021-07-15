@@ -44,6 +44,22 @@ body {
   margin-left: -165px;
 }
 
+.buttons {
+  display: inline-block;
+  position: relative;
+  top: -20px;
+  left: 300px;
+}
+
+button {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.new {
+  margin-right: 50px;
+}
+
 body {
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
@@ -101,6 +117,14 @@ table {
     margin: 40px 140px;
   }
 
+  .diff-select {
+    margin-left: 140px;
+  }
+
+  .reveal {
+    margin-left: 300px;
+  }
+
   table {
     width: 600px;
     height: 600px;
@@ -130,6 +154,19 @@ table {
   .app {
     display: flex;
     margin: 40px 140px;
+  }
+
+  .controls {
+    width: 500px;
+    margin: 0 auto;
+  }
+
+  .diff-select {
+    margin-left: 0;
+  }
+
+  .reveal {
+    margin-left: 100px;
   }
 
   .container {
@@ -171,12 +208,34 @@ table {
 }
 
 @media screen and (max-width: 650px) and (min-width: 451px) {
+  .html {
+    overflow-x: hidden;
+  }
+
   .app {
     margin: 40px 140px;
   }
 
   td .contents {
     font-size: 18px;
+  }
+
+  .diff-select {
+    margin-left: 10px;
+    margin-right: 50px;
+  }
+
+  .buttons {
+    left: 50px;
+  }
+
+  .reveal {
+    margin-left: 200px;
+  }
+
+  .controls {
+    width: 400px;
+    margin: 0 auto;
   }
 
   table {
@@ -222,6 +281,7 @@ table {
 @media screen and (max-width: 450px) {
   html {
     min-height: 200%;
+    overflow-x: hidden;
   }
 
   .app {
@@ -231,6 +291,14 @@ table {
   h1 {
     position: relative;
     font-size: 28px;
+  }
+
+  .buttons {
+    left: 230px;
+  }
+
+  button {
+    margin: 0px 5px;
   }
 
   td .contents {
