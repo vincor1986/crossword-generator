@@ -522,6 +522,8 @@ let complete = false;
 let allWords = [];
 let order = 1;
 
+let disallowed = ["sex", "cum", "homo", "ass", "lie", "eff", "effed"];
+
 const createWordsAndClues = async () => {
   const getNewWord = async (p) => {
     let data;
@@ -598,14 +600,12 @@ const createWordsAndClues = async () => {
 
     while (
       !retrievedWord.defs ||
-      allWords.includes(
-        retrievedWord.word ||
-          retrievedWord.word.length !== word.ref.length ||
-          retrievedWord.word.match(" ") ||
-          retrievedWord.word.match(/[0-9]/) ||
-          retrievedWord.word.match(/["!£$%&:-@/<>"]/) ||
-          retrieveWord.defs[0].includes("sexual")
-      )
+      allWords.includes(retrievedWord.word) ||
+      retrievedWord.word.length !== word.ref.length ||
+      retrievedWord.word.match(" ") ||
+      retrievedWord.word.match(/[0-9]/) ||
+      retrievedWord.word.match(/["!£$%&:-@/<>"]/) ||
+      disallowed.includes(retrievedWord.word)
     ) {
       index++;
 
@@ -659,10 +659,26 @@ const createWordsAndClues = async () => {
 
     // Set across word
 
-    word.clue =
+    let clue =
       retrievedWord.defs[
         Math.floor(Math.random() * retrievedWord.defs.length)
       ].split("\t")[1];
+
+    let x = 0;
+
+    while (clue.match(/sexual/)) {
+      x++;
+      clue =
+        retrievedWord.defs[
+          Math.floor(Math.random() * retrievedWord.defs.length)
+        ].split("\t")[1];
+
+      if (x > 10) {
+        throw new Error("no def suitable");
+      }
+    }
+
+    word.clue = clue;
     word.word = retrievedWord.word.split(" ").join("");
     allWords.push(retrievedWord.word.split(" ").join(""));
     console.log("Word ADDED ACROSS", word, "order: ", order);
@@ -737,7 +753,7 @@ const createWordsAndClues = async () => {
               randomDownWord.word.match(" ") ||
               randomDownWord.word.match(/[0-9]/) ||
               randomDownWord.word.match(/["!£$%&:-@/<>"]/) ||
-              randomDownWord.defs[0].includes("sexual")
+              disallowed.includes(randomDownWord.word)
             ) {
               if (index > shuffledDownWordList.length) {
                 throw new Error("no words were suitable");
@@ -786,10 +802,27 @@ const createWordsAndClues = async () => {
 
             // set down word
 
-            downWord.clue =
+            clue =
               randomDownWord.defs[
                 Math.floor(Math.random() * randomDownWord.defs.length)
               ].split("\t")[1];
+
+            x = 0;
+
+            while (clue.match(/sexual/)) {
+              x++;
+
+              clue =
+                randomDownWord.defs[
+                  Math.floor(Math.random() * randomDownWord.defs.length)
+                ].split("\t")[1];
+
+              if (x > 10) {
+                throw new Error("no def suitable");
+              }
+            }
+
+            downWord.clue = clue;
 
             downWord.word = randomDownWord.word.split(" ").join("");
             allWords.push(randomDownWord.word.split(" ").join(""));
@@ -849,7 +882,7 @@ const createWordsAndClues = async () => {
           finalNewWord.word.match(" ") ||
           finalNewWord.word.match(/[0-9]/) ||
           finalNewWord.word.match(/["!£$%&:-@/<>"]/) ||
-          finalNewWord.defs[0].includes("sexual")
+          disallowed.includes(finalNewWord.word)
         ) {
           index++;
           if (index > shuffledWordList.length) {
@@ -861,10 +894,25 @@ const createWordsAndClues = async () => {
 
         // set down word
 
-        current.clue =
+        clue =
           finalNewWord.defs[
             Math.floor(Math.random() * finalNewWord.defs.length)
           ].split("\t")[1];
+
+        x = 0;
+
+        while (clue.match(/sexual/)) {
+          x++;
+          clue =
+            finalNewWord.defs[
+              Math.floor(Math.random() * finalNewWord.defs.length)
+            ].split("\t")[1];
+          if (x > 10) {
+            throw new Error("no def suitable");
+          }
+        }
+
+        current.clue = clue;
 
         current.word = finalNewWord.word.split(" ").join("");
         allWords.push(finalNewWord.word.split(" ").join(""));
