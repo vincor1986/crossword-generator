@@ -19,7 +19,18 @@ for (let i = 0; i < 10; i++) {
       downNumber: "",
       acrossMarked: false,
       downMarked: false,
+      opposite: $(`[id=${9 - i}]`)[0].cells[`${9 - j}`],
     };
+  }
+}
+
+for (let i = 0; i < 10; i++) {
+  for (let j = 0; j < 10; j++) {
+    grid[`row${i}`][j].above = i > 0 ? grid[`row${i - 1}`][j] : false;
+    grid[`row${i}`][j].below = i < 9 ? grid[`row${i + 1}`][j] : false;
+    grid[`row${i}`][j].last = j > 0 ? grid[`row${i}`][j - 1] : false;
+    grid[`row${i}`][j].next = j < 9 ? grid[`row${i}`][j + 1] : false;
+    grid[`row${i}`][j].opposite = grid[`row${9 - i}`][9 - j];
   }
 }
 
@@ -280,6 +291,117 @@ for (let i = 0; i < 5; i++) {
   }
 }
 
+// Check for disjointed across words
+
+for (let i = 0; i < 5; i++) {
+  for (let j = 0; j < 10; j++) {
+    let current = grid[`row${i}`][j];
+    if (current.contents !== "#") {
+      let count = 1;
+      let disconnected = 0;
+      let running = true;
+      let blackSquareArr = [];
+
+      while (running && j < 10) {
+        let cur = grid[`row${i}`][j + (count - 1)];
+        let next = grid[`row${i}`][j + count];
+
+        let above = cur.above;
+        let below = cur.below;
+
+        if (next !== undefined && next.contents !== "#") {
+          count++;
+        } else {
+          running = false;
+        }
+
+        if ((!above || above.contents === "#") && below.contents === "#") {
+          disconnected++;
+          if (above) {
+            blackSquareArr.push(above);
+          }
+
+          blackSquareArr.push(below);
+        }
+      }
+
+      if (disconnected === count && count > 1) {
+        let targetSquare =
+          blackSquareArr[Math.floor(Math.random() * blackSquareArr.length)];
+        targetSquare.contents = "";
+        targetSquare.cell.style.backgroundColor = "";
+        targetSquare.opposite.contents = "";
+        targetSquare.opposite.cell.style.backgroundColor = "";
+        console.log(
+          "black square added to join disjointed across word",
+          targetSquare
+        );
+      }
+      j += count;
+    } else {
+      continue;
+    }
+  }
+}
+
+// Check for disjointed down words
+
+for (let j = 0; j < 10; j++) {
+  for (let i = 0; i < 5; i++) {
+    let current = grid[`row${i}`][j];
+    if (current.contents !== "#") {
+      let count = 1;
+      let disconnected = 0;
+      let running = true;
+      let blackSquareArr = [];
+
+      while (running && i < 5) {
+        let cur = grid[`row${i + (count - 1)}`][j];
+        let below = cur.below;
+
+        let last = cur.last;
+        let next = cur.next;
+
+        if (below && below.contents !== "#") {
+          count++;
+        } else {
+          running = false;
+        }
+
+        if (
+          (!last || last.contents === "#") &&
+          (!next || next.contents === "#")
+        ) {
+          disconnected++;
+          if (last) {
+            blackSquareArr.push(last);
+          }
+
+          if (next) {
+            blackSquareArr.push(next);
+          }
+        }
+      }
+
+      if (disconnected === count && count > 1) {
+        let targetSquare =
+          blackSquareArr[Math.floor(Math.random() * blackSquareArr.length)];
+        targetSquare.contents = "";
+        targetSquare.cell.style.backgroundColor = "";
+        targetSquare.opposite.contents = "";
+        targetSquare.opposite.cell.style.backgroundColor = "";
+        console.log(
+          "black square added to join disjointed down word",
+          targetSquare
+        );
+      }
+      i += count;
+    } else {
+      continue;
+    }
+  }
+}
+
 // build words object and number grid
 
 let words = {
@@ -470,7 +592,8 @@ const createWordsAndClues = async () => {
           retrievedWord.word.length !== word.ref.length ||
           retrievedWord.word.match(" ") ||
           retrievedWord.word.match(/[0-9]/) ||
-          retrievedWord.word.match(/["!£$%&:-@/<>"]/)
+          retrievedWord.word.match(/["!£$%&:-@/<>"]/) ||
+          retrieveWord.defs[0].includes("sexual")
       )
     ) {
       index++;
@@ -589,7 +712,8 @@ const createWordsAndClues = async () => {
               randomDownWord.word.length !== downWord.ref.length ||
               randomDownWord.word.match(" ") ||
               randomDownWord.word.match(/[0-9]/) ||
-              randomDownWord.word.match(/["!£$%&:-@/<>"]/)
+              randomDownWord.word.match(/["!£$%&:-@/<>"]/) ||
+              randomDownWord.defs[0].includes("sexual")
             ) {
               index++;
               if (!shuffledDownWordList[index]) {
@@ -687,7 +811,8 @@ const createWordsAndClues = async () => {
           finalNewWord.word.length !== current.ref.length ||
           finalNewWord.word.match(" ") ||
           finalNewWord.word.match(/[0-9]/) ||
-          finalNewWord.word.match(/["!£$%&:-@/<>"]/)
+          finalNewWord.word.match(/["!£$%&:-@/<>"]/) ||
+          finalNewWord.defs[0].includes("sexual")
         ) {
           index++;
           finalNewWord = shuffledNewWordList[index];
