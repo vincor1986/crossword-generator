@@ -990,6 +990,7 @@ const revealGrid = () => {
   clearHighlight();
 
   let letterCount = 0;
+  let entered = 0;
   let correct = 0;
 
   allSquares.forEach((cell) => {
@@ -1000,11 +1001,30 @@ const revealGrid = () => {
     if (current.contents !== "#") {
       letterCount++;
 
+      if (current.cell.children[1].textContent !== "") {
+        entered++;
+      }
+
       if (current.cell.children[1].textContent === current.contents) {
         correct++;
       }
     }
   });
+
+  if (entered > 0 && correct !== letterCount) {
+    allSquares.forEach((cell) => {
+      let row = cell.parentElement.id;
+      let index = cell.cellIndex;
+      let current = grid[`row${row}`][index];
+
+      if (
+        current.contents !== "#" &&
+        current.cell.children[1].textContent !== current.contents
+      ) {
+        current.cell.style.border = "2px solid red";
+      }
+    });
+  }
 
   if (correct === letterCount) {
     let table = document.querySelector("table");
