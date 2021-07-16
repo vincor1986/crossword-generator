@@ -91,6 +91,7 @@ td .contents {
   padding: auto;
   width: 100%;
   z-index: 0;
+  pointer-events: none;
 }
 
 td .number {
@@ -101,6 +102,19 @@ td .number {
   vertical-align: text-top;
   height: 10px;
   z-index: 5;
+  pointer-events: none;
+}
+
+td .input {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  z-index: 0;
+  outline: none;
+  border: none;
+  text-align: center;
+  pointer-events: none;
 }
 
 table {
@@ -111,18 +125,41 @@ table {
   z-index: 0;
 }
 
-@media screen and (min-width: 1376px) {
+.message {
+  position: fixed;
+  left: 65%;
+  top: 40%;
+  margin-left: -200px;
+  color: green;
+  text-align: center;
+  font-weight: bold;
+  background: rgb(250, 212, 181);
+  background: linear-gradient(
+    146deg,
+    rgba(250, 212, 181, 1) 0%,
+    rgba(254, 245, 220, 1) 100%
+  );
+  padding: 20px 30px;
+  z-index: 30;
+  border: 3px solid green;
+  border-radius: 20px;
+  height: 150px;
+  width: 400px;
+  display: none;
+}
+
+@media screen and (min-width: 1250px) {
   .app {
     display: flex;
     margin: 40px 140px;
   }
 
   .diff-select {
-    margin-left: 140px;
+    margin-left: 220px;
   }
 
   .reveal {
-    margin-left: 300px;
+    margin-left: 350px;
   }
 
   table {
@@ -131,6 +168,7 @@ table {
     min-width: 600px;
     min-height: 600px;
     margin-right: 60px;
+    margin-left: 60px;
   }
 
   td .number {
@@ -139,7 +177,7 @@ table {
   }
 
   .container {
-    margin: -10px auto;
+    margin: 20px auto;
     font-size: 12px;
   }
 
@@ -150,7 +188,7 @@ table {
   }
 }
 
-@media screen and (min-width: 651px) and (max-width: 1375px) {
+@media screen and (min-width: 651px) and (max-width: 1249px) {
   .app {
     display: flex;
     margin: 40px 140px;
@@ -167,6 +205,12 @@ table {
 
   .reveal {
     margin-left: 100px;
+  }
+
+  .message {
+    left: 47%;
+    top: 500px;
+    font-size: 16px;
   }
 
   .container {
@@ -238,6 +282,14 @@ table {
     margin: 0 auto;
   }
 
+  .message {
+    font-size: 14px;
+    left: 50%;
+    top: 620px;
+    width: 300px;
+    margin-left: -180px;
+  }
+
   table {
     position: absolute;
     top: 320px;
@@ -251,6 +303,12 @@ table {
     height: 35px;
     min-width: 35px;
     min-height: 35px;
+  }
+
+  td .input {
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
   }
 
   td .number {
@@ -301,6 +359,12 @@ table {
     margin: 0px 5px;
   }
 
+  .message {
+    font-size: 12px;
+    width: 200px;
+    top: 450px;
+  }
+
   td .contents {
     font-size: 18px;
   }
@@ -328,8 +392,14 @@ table {
     height: 6px;
   }
 
+  td .input {
+    width: 15px;
+    height: 15px;
+    font-size: 18px;
+  }
+
   .container {
-    font-size: 12px;
+    font-size: 14px;
     position: absolute;
     display: flex;
     word-wrap: break-word;
@@ -346,5 +416,3 @@ table {
     margin: 10px;
   }
 }
-
-
