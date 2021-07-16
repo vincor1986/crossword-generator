@@ -136,8 +136,8 @@ table {
   background: rgb(250, 212, 181);
   background: linear-gradient(
     146deg,
-    rgba(250, 212, 181, 1) 0%,
-    rgba(254, 245, 220, 1) 100%
+    rgb(248, 233, 233) 0%,
+    rgb(255, 255, 255) 100%
   );
   padding: 20px 30px;
   z-index: 30;
@@ -146,6 +146,7 @@ table {
   height: 150px;
   width: 400px;
   display: none;
+  box-shadow: rgba(100, 100, 111, 0.6) 0px 7px 29px 0px;
 }
 
 @media screen and (min-width: 1250px) {
@@ -416,3 +417,4 @@ table {
     margin: 10px;
   }
 }
+
