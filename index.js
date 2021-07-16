@@ -948,9 +948,9 @@ const populateCluesList = () => {
   across.forEach((val) => {
     let current = words.across[val];
     let p = document.createElement("p");
-    p.textContent = `${val.replace("across", "")}: ${current.clue} (${
-      current.ref.length
-    })`;
+    p.innerHTML = `<strong>${val.replace("across", "")}</strong> ${
+      current.clue
+    } (${current.ref.length})`;
     acrossCard.append(p);
   });
 
@@ -961,9 +961,9 @@ const populateCluesList = () => {
   down.forEach((val) => {
     let current = words.down[val];
     let p = document.createElement("p");
-    p.textContent = `${val.replace("down", "")}: ${current.clue} (${
-      current.ref.length
-    })`;
+    p.innerHTML = `<strong>${val.replace("down", "")}</strong> ${
+      current.clue
+    } (${current.ref.length})`;
     downCard.append(p);
   });
 };
@@ -986,6 +986,32 @@ const revealGrid = () => {
   console.log("reveal clicked");
 
   const allAcross = Object.keys(words.across);
+
+  clearHighlight();
+
+  let letterCount = 0;
+  let correct = 0;
+
+  allSquares.forEach((cell) => {
+    let row = cell.parentElement.id;
+    let index = cell.cellIndex;
+    let current = grid[`row${row}`][index];
+
+    if (current.contents !== "#") {
+      letterCount++;
+
+      if (current.cell.children[1].textContent === current.contents) {
+        correct++;
+      }
+    }
+  });
+
+  if (correct === letterCount) {
+    let table = document.querySelector("table");
+    table.style.border = "5px solid green";
+    let message = document.querySelector(".message");
+    message.style.display = "block";
+  }
 
   allAcross.forEach((word) => {
     words.across[`${word}`].ref.forEach((cell, index) => {
@@ -1013,3 +1039,77 @@ const newGrid = document.querySelector(".new");
 newGrid.addEventListener("click", () => {
   window.location.reload();
 });
+
+let allSquares = Array.from(document.querySelectorAll("td"));
+
+const clearHighlight = () => {
+  allSquares.forEach((cell) => {
+    cell.style.border = "1px solid black";
+    if (cell.children[2]) {
+      let target = cell.children[2];
+      cell.children[1].textContent = target.value.toUpperCase();
+      cell.removeChild(target);
+    }
+  });
+};
+
+allSquares.forEach((el) => {
+  el.addEventListener("click", (e) => {
+    let row = e.target.parentElement.id;
+    let index = e.target.cellIndex;
+    if (grid[`row${row}`][index].contents === "#") {
+      clearHighlight();
+      return;
+    }
+    highlightCells(e.target.parentElement.id, e.target.cellIndex);
+  });
+});
+
+const highlightCells = (i, j) => {
+  let current = grid[`row${i}`][j];
+  let direction = "";
+  let wordNumber = "";
+
+  if (current.acrossNumber !== "") {
+    direction = "across";
+    wordNumber = current.acrossNumber;
+  } else {
+    direction = "down";
+    wordNumber = current.downNumber;
+  }
+
+  let wordToHighlight = words[`${direction}`][`${wordNumber}${direction}`];
+
+  if (
+    wordToHighlight.ref[0].cell.style.border === "2px solid blue" &&
+    wordToHighlight.ref[1].cell.style.border === "2px solid blue" &&
+    current.acrossNumber !== "" &&
+    current.downNumber !== ""
+  ) {
+    direction = "down";
+    wordNumber = current.downNumber;
+    wordToHighlight = words[`${direction}`][`${wordNumber}${direction}`];
+  }
+
+  clearHighlight();
+
+  wordToHighlight.ref.forEach((cell, index) => {
+    cell.cell.style.border = "2px solid blue";
+    let target = cell.cell.children[1];
+    let value = target.textContent;
+    cell.cell.innerHTML += `<input class="input" type="text" maxlength="1" value="${value}" />`;
+    cell.cell.children[1].textContent = "";
+  });
+
+  let inputs = Array.from(document.querySelectorAll(".input"));
+
+  inputs.forEach((el, index) => {
+    el.addEventListener("input", () => {
+      if (wordToHighlight.ref[index + 1]) {
+        wordToHighlight.ref[index + 1].cell.children[2].select();
+      }
+    });
+  });
+
+  wordToHighlight.ref[0].cell.children[2].select();
+};
