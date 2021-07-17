@@ -1124,7 +1124,10 @@ const highlightCells = (i, j) => {
   let inputs = Array.from(document.querySelectorAll(".input"));
 
   inputs.forEach((el, index) => {
-    el.addEventListener("input", () => {
+    el.addEventListener("input", (e) => {
+      if (e.inputType.includes("delete")) {
+        return;
+      }
       if (wordToHighlight.ref[index + 1]) {
         wordToHighlight.ref[index + 1].cell.children[2].select();
       }
