@@ -65,10 +65,13 @@ body {
   flex-direction: column;
   width: min-content;
   margin: 0 auto;
+  min-height: 90vh;
+  justify-content: center;
 }
 
 .content-container {
   display: flex;
+  justify-content: center;
 }
 
 .header {
