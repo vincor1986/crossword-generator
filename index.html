@@ -11,163 +11,169 @@
     <div class="modal"><h2>Generating new crossword...</h2></div>
     <br />
     <br />
-    <h1>
-      Cross<span class="title-word">word</span>
-      Generator
-    </h1>
-    <br />
-    <div class="controls">
-      <div class="diff-select">
-        <label id="diff-label" for="difficulty">Difficulty Level</label>
-        <select
-          name="difficulty"
-          id="difficulty"
-          class="difficulty-setting"
-          size="0"
-        >
-          <option value="0">Normal</option>
-          <option value="1">Expert</option>
-        </select>
-      </div>
-      <div class="buttons">
-        <button class="reveal">Reveal</button><button class="new">New</button>
-      </div>
-    </div>
 
+    <br />
     <div class="app">
-      <table>
-        <tr id="0">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="1">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="2">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="3">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="4">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="5">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="6">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="7">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="8">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr id="9">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </table>
-      <br />
-      <br />
-      <div class="message">
-        <h2>
-          Congratulations, you have completed the crossword! Click 'New' or
-          refresh page to generate a new crossword.
-        </h2>
+      <div class="header">
+        <h1>
+          <span class="title-word">Random Crossword Generator</span>
+        </h1>
       </div>
-      <div class="container">
-        <div class="across-card"></div>
-        <div class="down-card"></div>
+      <div class="content-container">
+        <div class="table-container">
+          <div class="controls">
+            <div class="diff-select">
+              <label id="diff-label" for="difficulty">Difficulty Level</label>
+              <select
+                name="difficulty"
+                id="difficulty"
+                class="difficulty-setting"
+                size="0"
+              >
+                <option value="0">Normal</option>
+                <option value="1">Expert</option>
+              </select>
+            </div>
+            <div class="buttons">
+              <button class="reveal">Reveal</button
+              ><button class="new">New</button>
+            </div>
+          </div>
+          <table>
+            <tr id="0">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="1">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="2">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="3">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="4">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="5">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="6">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="7">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="8">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="9">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <br />
+        <br />
+        <div class="message">
+          <h2>
+            Congratulations, you have completed the crossword! Click 'New' or
+            refresh page to generate a new crossword.
+          </h2>
+        </div>
+        <div class="container">
+          <div class="across-card"></div>
+          <div class="down-card"></div>
+        </div>
       </div>
     </div>
     <script

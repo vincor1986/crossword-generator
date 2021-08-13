@@ -945,6 +945,10 @@ const populateCluesList = () => {
   h.textContent = "Across";
   acrossCard.append(h);
 
+  let lineBreak = document.createElement("div");
+  lineBreak.className = "line-break";
+  acrossCard.append(lineBreak);
+
   across.forEach((val) => {
     let current = words.across[val];
     let p = document.createElement("p");
@@ -957,6 +961,10 @@ const populateCluesList = () => {
   let h3 = document.createElement("h3");
   h3.textContent = "Down";
   downCard.append(h3);
+
+  let lineBreakB = document.createElement("div");
+  lineBreakB.className = "line-break";
+  downCard.append(lineBreakB);
 
   down.forEach((val) => {
     let current = words.down[val];
