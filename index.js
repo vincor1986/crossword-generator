@@ -522,7 +522,17 @@ let complete = false;
 let allWords = [];
 let order = 1;
 
-let disallowed = ["bitch", "sex", "cum", "homo", "ass", "lie", "eff", "effed"];
+let disallowed = [
+  "bitch",
+  "sex",
+  "cum",
+  "homo",
+  "ass",
+  "lie",
+  "eff",
+  "effed",
+  "anus",
+];
 
 const createWordsAndClues = async () => {
   const getNewWord = async (p) => {
@@ -541,7 +551,24 @@ const createWordsAndClues = async () => {
 
   let acrossWords = Object.keys(words.across);
 
-  let common = ["t", "d", "e", "i", "s", "r", "a", "o"];
+  let common = [
+    "t",
+    "l",
+    "d",
+    "e",
+    "i",
+    "s",
+    "r",
+    "a",
+    "o",
+    "y",
+    "p",
+    "c",
+    "n",
+    "m",
+  ];
+
+  let bufferAmount = 3;
 
   for (let i = 0; i < acrossWords.length; i++) {
     let word = words.across[acrossWords[i]];
@@ -588,6 +615,17 @@ const createWordsAndClues = async () => {
       shuffledWordList = retrievedWordList.sort((a, b) => {
         return b.score - a.score;
       });
+
+      let first = shuffledWordList.splice(
+        0,
+        Math.min(shuffledWordList.length, bufferAmount)
+      );
+
+      randomFirst = first.sort((a, b) => {
+        return Math.random() > 0.5 ? 1 : -1;
+      });
+
+      shuffledWordList = randomFirst.concat(shuffledWordList);
     }
 
     console.log(shuffledWordList);
@@ -651,6 +689,17 @@ const createWordsAndClues = async () => {
           shuffledWordList = retrievedWordList.sort((a, b) => {
             return b.score - a.score;
           });
+
+          let first = shuffledWordList.splice(
+            0,
+            Math.min(shuffledWordList.length, bufferAmount)
+          );
+
+          randomFirst = first.sort((a, b) => {
+            return Math.random() > 0.5 ? 1 : -1;
+          });
+
+          shuffledWordList = randomFirst.concat(shuffledWordList);
         }
       }
 
@@ -659,22 +708,33 @@ const createWordsAndClues = async () => {
 
     // Set across word
 
-    let clue =
-      retrievedWord.defs[
-        Math.floor(Math.random() * retrievedWord.defs.length)
-      ].split("\t")[1];
+    let clue = undefined;
 
-    let x = 0;
+    for (let a = 0; a < retrievedWord.defs.length; a++) {
+      if (!retrievedWord.defs[a].split("\t")[1].includes(retrievedWord.word)) {
+        clue = retrievedWord.defs[a].split("\t")[1];
+        break;
+      }
+    }
 
-    while (clue.match(/sexual/)) {
-      x++;
+    if (clue === undefined) {
       clue =
         retrievedWord.defs[
           Math.floor(Math.random() * retrievedWord.defs.length)
         ].split("\t")[1];
 
-      if (x > 10) {
-        throw new Error("no def suitable");
+      let x = 0;
+
+      while (clue.match(/sexual/)) {
+        x++;
+        clue =
+          retrievedWord.defs[
+            Math.floor(Math.random() * retrievedWord.defs.length)
+          ].split("\t")[1];
+
+        if (x > 10) {
+          throw new Error("no def suitable");
+        }
       }
     }
 
@@ -734,6 +794,17 @@ const createWordsAndClues = async () => {
               shuffledDownWordList = downWordList.sort((a, b) => {
                 return b.score - a.score;
               });
+
+              let first = shuffledDownWordList.splice(
+                0,
+                Math.min(shuffledDownWordList.length, bufferAmount)
+              );
+
+              randomFirst = first.sort((a, b) => {
+                return Math.random() > 0.5 ? 1 : -1;
+              });
+
+              shuffledDownWordList = randomFirst.concat(shuffledDownWordList);
             }
 
             console.log(shuffledDownWordList);
@@ -789,6 +860,18 @@ const createWordsAndClues = async () => {
                   shuffledDownWordList = downWordList.sort((a, b) => {
                     return b.score - a.score;
                   });
+
+                  let first = shuffledDownWordList.splice(
+                    0,
+                    Math.min(shuffledDownWordList.length, bufferAmount)
+                  );
+
+                  randomFirst = first.sort((a, b) => {
+                    return Math.random() > 0.5 ? 1 : -1;
+                  });
+
+                  shuffledDownWordList =
+                    randomFirst.concat(shuffledDownWordList);
                 }
 
                 index = 0;
@@ -799,23 +882,37 @@ const createWordsAndClues = async () => {
 
             // set down word
 
-            clue =
-              randomDownWord.defs[
-                Math.floor(Math.random() * randomDownWord.defs.length)
-              ].split("\t")[1];
+            let clue = undefined;
 
-            x = 0;
+            for (let a = 0; a < randomDownWord.defs.length; a++) {
+              if (
+                !randomDownWord.defs[a]
+                  .split("\t")[1]
+                  .includes(randomDownWord.word)
+              ) {
+                clue = randomDownWord.defs[a].split("\t")[1];
+                break;
+              }
+            }
 
-            while (clue.match(/sexual/)) {
-              x++;
-
+            if (clue === undefined) {
               clue =
                 randomDownWord.defs[
                   Math.floor(Math.random() * randomDownWord.defs.length)
                 ].split("\t")[1];
 
-              if (x > 10) {
-                throw new Error("no def suitable");
+              let x = 0;
+
+              while (clue.match(/sexual/)) {
+                x++;
+                clue =
+                  randomDownWord.defs[
+                    Math.floor(Math.random() * randomDownWord.defs.length)
+                  ].split("\t")[1];
+
+                if (x > 10) {
+                  throw new Error("no def suitable");
+                }
               }
             }
 
@@ -888,21 +985,35 @@ const createWordsAndClues = async () => {
 
         // set down word
 
-        clue =
-          finalNewWord.defs[
-            Math.floor(Math.random() * finalNewWord.defs.length)
-          ].split("\t")[1];
+        let clue = undefined;
 
-        x = 0;
+        for (let a = 0; a < finalNewWord.defs.length; a++) {
+          if (
+            !finalNewWord.defs[a].split("\t")[1].includes(finalNewWord.word)
+          ) {
+            clue = finalNewWord.defs[a].split("\t")[1];
+            break;
+          }
+        }
 
-        while (clue.match(/sexual/)) {
-          x++;
+        if (clue === undefined) {
           clue =
             finalNewWord.defs[
               Math.floor(Math.random() * finalNewWord.defs.length)
             ].split("\t")[1];
-          if (x > 10) {
-            throw new Error("no def suitable");
+
+          let x = 0;
+
+          while (clue.match(/sexual/)) {
+            x++;
+            clue =
+              finalNewWord.defs[
+                Math.floor(Math.random() * finalNewWord.defs.length)
+              ].split("\t")[1];
+
+            if (x > 10) {
+              throw new Error("no def suitable");
+            }
           }
         }
 
