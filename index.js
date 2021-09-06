@@ -591,7 +591,6 @@ const createWordsAndClues = async () => {
     }
 
     queryParams = queryParams.join("");
-    console.log(queryParams);
 
     //Call API
 
@@ -711,7 +710,13 @@ const createWordsAndClues = async () => {
     let clue = undefined;
 
     for (let a = 0; a < retrievedWord.defs.length; a++) {
-      if (!retrievedWord.defs[a].split("\t")[1].includes(retrievedWord.word)) {
+      if (
+        !retrievedWord.defs[a].split("\t")[1].includes(retrievedWord.word) ||
+        !retrievedWord.defs[a]
+          .split("\t")[1]
+          .toLowerCase()
+          .match(/sexual/)
+      ) {
         clue = retrievedWord.defs[a].split("\t")[1];
         break;
       }
@@ -725,14 +730,14 @@ const createWordsAndClues = async () => {
 
       let x = 0;
 
-      while (clue.match(/sexual/)) {
+      while (clue.toLowerCase().match(/sexual/)) {
         x++;
         clue =
           retrievedWord.defs[
             Math.floor(Math.random() * retrievedWord.defs.length)
           ].split("\t")[1];
 
-        if (x > 10) {
+        if (x > 3) {
           throw new Error("no def suitable");
         }
       }
@@ -888,7 +893,11 @@ const createWordsAndClues = async () => {
               if (
                 !randomDownWord.defs[a]
                   .split("\t")[1]
-                  .includes(randomDownWord.word)
+                  .includes(randomDownWord.word) ||
+                !randomDownWord.defs[a]
+                  .split("\t")[1]
+                  .toLowerCase()
+                  .match(/sexual/)
               ) {
                 clue = randomDownWord.defs[a].split("\t")[1];
                 break;
@@ -903,14 +912,14 @@ const createWordsAndClues = async () => {
 
               let x = 0;
 
-              while (clue.match(/sexual/)) {
+              while (clue.toLowerCase().match(/sexual/)) {
                 x++;
                 clue =
                   randomDownWord.defs[
                     Math.floor(Math.random() * randomDownWord.defs.length)
                   ].split("\t")[1];
 
-                if (x > 10) {
+                if (x > 3) {
                   throw new Error("no def suitable");
                 }
               }
@@ -989,7 +998,11 @@ const createWordsAndClues = async () => {
 
         for (let a = 0; a < finalNewWord.defs.length; a++) {
           if (
-            !finalNewWord.defs[a].split("\t")[1].includes(finalNewWord.word)
+            !finalNewWord.defs[a].split("\t")[1].includes(finalNewWord.word) ||
+            !finalNewWord.defs[a]
+              .split("\t")[1]
+              .toLowerCase()
+              .match(/sexual/)
           ) {
             clue = finalNewWord.defs[a].split("\t")[1];
             break;
@@ -1004,14 +1017,14 @@ const createWordsAndClues = async () => {
 
           let x = 0;
 
-          while (clue.match(/sexual/)) {
+          while (clue.toLowerCase().match(/sexual/)) {
             x++;
             clue =
               finalNewWord.defs[
                 Math.floor(Math.random() * finalNewWord.defs.length)
               ].split("\t")[1];
 
-            if (x > 10) {
+            if (x > 3) {
               throw new Error("no def suitable");
             }
           }
