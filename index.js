@@ -711,7 +711,7 @@ const createWordsAndClues = async () => {
 
     for (let a = 0; a < retrievedWord.defs.length; a++) {
       if (
-        !retrievedWord.defs[a].split("\t")[1].includes(retrievedWord.word) ||
+        !retrievedWord.defs[a].split("\t")[1].includes(retrievedWord.word) &&
         !retrievedWord.defs[a]
           .split("\t")[1]
           .toLowerCase()
@@ -893,7 +893,7 @@ const createWordsAndClues = async () => {
               if (
                 !randomDownWord.defs[a]
                   .split("\t")[1]
-                  .includes(randomDownWord.word) ||
+                  .includes(randomDownWord.word) &&
                 !randomDownWord.defs[a]
                   .split("\t")[1]
                   .toLowerCase()
@@ -998,7 +998,7 @@ const createWordsAndClues = async () => {
 
         for (let a = 0; a < finalNewWord.defs.length; a++) {
           if (
-            !finalNewWord.defs[a].split("\t")[1].includes(finalNewWord.word) ||
+            !finalNewWord.defs[a].split("\t")[1].includes(finalNewWord.word) &&
             !finalNewWord.defs[a]
               .split("\t")[1]
               .toLowerCase()
