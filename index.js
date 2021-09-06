@@ -532,6 +532,8 @@ let disallowed = [
   "eff",
   "effed",
   "anus",
+  "ed",
+  "eds",
 ];
 
 const createWordsAndClues = async () => {
